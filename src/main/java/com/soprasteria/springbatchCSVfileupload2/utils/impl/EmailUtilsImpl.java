@@ -4,6 +4,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,12 @@ public class EmailUtilsImpl implements EmailUtils {
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
+	
+	@Value("${spring.mail.properties.mail.smtp.from}")
+	private String from;
+	
+	@Value("${spring.mail.properties.mail.smtp.to}")
+	private String to;
 
 	@Override
 	public void send(String subject, String body) {
@@ -22,9 +29,9 @@ public class EmailUtilsImpl implements EmailUtils {
 		try {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);// true indicates multipart message
-			helper.setFrom("3968d203-2bc1-4749-98ba-058213238d4d@mailslurp.mx");
+			helper.setFrom(from);
 			helper.setSubject(subject);
-			helper.setTo("3968d203-2bc1-4749-98ba-058213238d4d@mailslurp.mx");
+			helper.setTo(to);
 			helper.setText(body, true); // true indicates body is html
 			javaMailSender.send(message);
 		} catch (MessagingException e) {
