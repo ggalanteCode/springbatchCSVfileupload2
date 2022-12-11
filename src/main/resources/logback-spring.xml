@@ -41,8 +41,13 @@
 
     <!-- LOG "com.soprasteria.springbatchCSVfileupload2.*" at TRACE level -->
     <logger name="com.soprasteria.springbatchCSVfileupload2" level="trace" additivity="false">
-        <appender-ref ref="RotateDailyErrorRollingFile" />
         <appender-ref ref="Console" />
+        <appender-ref ref="RotateDailyErrorRollingFile" />
+    </logger>
+    
+    <logger name="org.springframework.batch.core" level="error" additivity="false">
+        <appender-ref ref="Console" />
+        <appender-ref ref="RotateDailyErrorRollingFile" />
     </logger>
 
 </configuration>
